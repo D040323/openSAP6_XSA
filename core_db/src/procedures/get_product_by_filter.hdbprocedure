@@ -9,8 +9,31 @@ PROCEDURE "get_product_by_filter" (
                    CUMULATIVE_SUM BIGINT )   )
    LANGUAGE SQLSCRIPT
    SQL SECURITY INVOKER
-   READS SQL DATA AS
+   AS
 BEGIN
+
+DECLARE temp_date DATE;
+DECLARE MYCOND CONDITION FOR SQL_ERROR_CODE 10001;
+
+BEGIN
+   DECLARE EXIT HANDLER FOR MYCOND
+     BEGIN
+      DECLARE parameter NVARCHAR(256) = 'start_date = '|| :im_start_date || 
+                                       ' end_date = '||  :im_end_date; 
+      temp_date = :im_start_date;
+      im_start_date = :im_end_date;
+      im_end_date = :temp_date;
+	  INSERT INTO "log.errors"
+	       (ERROR_TIMESTAMP, OBJECT_SCHEMA_NAME, OBJECT_NAME, PARAMETER, SQL_ERROR_CODE, SQL_ERROR_MESSAGE)
+	       VALUES (current_timestamp,::CURRENT_OBJECT_SCHEMA,::CURRENT_OBJECT_NAME, 
+	               :parameter , ::SQL_ERROR_CODE, ::SQL_ERROR_MESSAGE);
+     END;
+           
+    if :im_start_date > :im_end_date THEN
+        SIGNAL MYCOND SET MESSAGE_TEXT = 'Start date must be smaller then end date';
+    END IF;
+END;
+
 
 pre_filtered_products = SELECT * FROM "MD.Products"
                               WHERE CATEGORY NOT IN ('Laser printers');
@@ -40,4 +63,4 @@ CALL "calculate_cumulative_sum_of_delivered_products"(
 
 ex_products = select * from :PRODUCTS order by PRODUCTID, DELIVERYDATE;
 
-END;
+END
