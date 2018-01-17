@@ -6,7 +6,7 @@ FUNCTION "apply_discount" (
 	SQL SECURITY INVOKER AS
 BEGIN
 /***************************** 
-	Write your function logic
+	Write your function logic 
  *****************************/
     ex_result := :im_price - ( :im_price * :im_discount ); 
 END;
