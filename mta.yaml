@@ -37,6 +37,15 @@ modules:
       - name: hdi_user_db
         properties:
           TARGET_CONTAINER: '~{user-container-name}'
+
+  - name: core_xsjx
+    type: nodejs
+    path: core_xsjx
+    provides:
+     - name: core_xsjx_api
+       properties:
+          url: ${default-url}
+
 resources:
   - name: openSAPHANA6_02-uaa
     type: com.sap.xs.uaa-space
