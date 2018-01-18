@@ -9,11 +9,11 @@ modules:
     requires:
       - name: openSAPHANA6_02-uaa
       - name: core_xsjx_api
-        group: destination
+        group: destinations
         properties:
           name: core-xsjs-backend
           url: '~{url}'
-          forwardAuthToken: true 
+          forwardAuthToken: true
   - name: core_db
     type: hdb
     path: core_db
