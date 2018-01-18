@@ -14,6 +14,12 @@ modules:
           name: core-xsjs-backend
           url: '~{url}'
           forwardAuthToken: true
+      - name: user_xsjs_api
+        group: destinations
+        properties:
+          name: user-backend
+          url: '~{url}'
+          forwardAuthToken: true 
   - name: core_db
     type: hdb
     path: core_db
@@ -54,6 +60,18 @@ modules:
       - name: hdi_core_db
       - name: openSAPHANA6_02-uaa
       - name: core_db
+      - name: sap.hana.democontent.epm.services.images
+  - name: user_xsjs
+    type: nodejs
+    path: user_xsjs
+    provides:
+      - name: user_xsjs_api
+        properties:
+          url: '${default-url}'
+    requires:
+      - name: openSAPHANA6_02-uaa
+      - name: hdi_user_db
+      - name: user_db
 resources:
   - name: openSAPHANA6_02-uaa
     type: com.sap.xs.uaa-space
@@ -85,3 +103,9 @@ resources:
       service-name: openSAP.CentralDB.opensap-central-container
     properties:
       central-db-name: '${service-name}'
+  - name: sap.hana.democontent.epm.services.images
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: sap.hana.democontent.epm.services.images.02
+    properties:
+      xshttpdest-images-service-name: '${service-name}'
