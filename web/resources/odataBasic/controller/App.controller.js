@@ -15,6 +15,10 @@ sap.ui.define([
 			var bpModel = this.getOwnerComponent().getModel("bpModel");
 			var oTable = this.getView().byId("bpTable");
 
+//oTable.setModel(bpModel);
+//oTable.setEntitySet("BusinessPartners");
+//oTable.setInitiallyVisibleFields("PARTNERID,COMPANYNAME,PARTNERROLE");
+
 			function fnLoadMetadata() {
 				oTable.setModel(bpModel);
 				oTable.setEntitySet("BusinessPartner");
