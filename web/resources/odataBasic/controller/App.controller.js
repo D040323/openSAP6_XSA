@@ -15,21 +15,21 @@ sap.ui.define([
 			var bpModel = this.getOwnerComponent().getModel("bpModel");
 			var oTable = this.getView().byId("bpTable");
 
-					function fnLoadMetadata() {
+			function fnLoadMetadata() {
 				oTable.setModel(bpModel);
-				oTable.setEntitySet("BusinessPartners");
+				oTable.setEntitySet("BusinessPartner");
 				var oMeta = bpModel.getServiceMetadata();
 				var headerFields = "";
 				for (var i = 0; i < oMeta.dataServices.schema[0].entityType[0].property.length; i++) {
 					var property = oMeta.dataServices.schema[0].entityType[0].property[i];
-					headerFields +=  property.name + ",";
+					headerFields += property.name + ",";
 				}
 				oTable.setInitiallyVisibleFields(headerFields);
 			}
 			bpModel.attachMetadataLoaded(bpModel, function() {
 				fnLoadMetadata();
 			});
-			
+
 		},
 
 		onErrorCall: function(oError) {
