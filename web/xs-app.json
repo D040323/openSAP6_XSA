@@ -1,8 +1,10 @@
 {
 	"welcomeFile": "index.html",
 	"authenticationMethod": "route",
-	"routes": [
-		{
+	"routes": [{
+		"source": "/user/(.*)",
+		"destination": "user-backend"
+	}, {
 		"source": "(.*)(.xsjs)",
 		"destination": "core-xsjs-backend",
 		"csrfProtection": false,
