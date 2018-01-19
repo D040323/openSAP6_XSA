@@ -75,6 +75,15 @@ modules:
       - name: openSAPHANA6_02-uaa
       - name: hdi_user_db
       - name: user_db
+
+  - name: core_node
+    type: nodejs
+    path: core_node
+    provides:
+     - name: core_node_api
+       properties:
+          url: ${default-url}
+
 resources:
   - name: openSAPHANA6_02-uaa
     type: com.sap.xs.uaa-space
